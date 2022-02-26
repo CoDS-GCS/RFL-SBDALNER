@@ -92,7 +92,7 @@ def parse_args():
     )
     parser.add_argument("-B", "--beam_search", type=int, default=1,
                         help="Beam search parameter. B=1 means a greedy search")
-    parser.add_argument("-D", "--data_path", type=str, default="/home/pradmard/repos/data/OntoNotes-5.0/NER/")
+    parser.add_argument("-D", "--data_path", type=str, default="data/conll2003")
     # parser.add_argument(
     #     "--labelthres", type=float, help="proportion of sentence that must be manually labelled before it is used
     #     for training", required = True
@@ -203,7 +203,7 @@ def make_root_dir(args, indices):
     
     root_dir = os.path.join(
         '.',
-        f"{'-'.join(sys.argv[1:])}--{rn}".replace("/", "")
+        f"{'-'.join(sys.argv[1:])}--{rn}".replace(":", "")
     )
     os.mkdir(root_dir)
 
@@ -501,7 +501,8 @@ def active_learning_train(args):
         if not args.cuda:
             logging.warning("you have a CUDA device, so you should probably run with --cuda")
 
-    device = torch.device("cuda" if args.cuda else "cpu")
+    # device = torch.device("cuda" if args.cuda else "cpu")
+    device = torch.device("cpu")
 
     # TODO: make the path a parameter
     helper, word_embeddings, train_set, test_set, tag_set = load_dataset(args.data_path)
